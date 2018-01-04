@@ -18,7 +18,7 @@ if [ $OPEN_RESTY == "" ] ; then
 fi
 
 
-#============Groovy ================
+#============mkdir ================
 if [ ! -d  $OPENNGL_HOME ] ; then 
 	echo "work space install"
 fi
@@ -29,12 +29,22 @@ mkdir -p $OPENNGL_HOME/lua
 mkdir -p $OPENNGL_HOME/oper
 mkdir -p $OPENNGL_HOME/nginx
 
-if [ ! -d $OPENNGL_NGX_GR ] ; then
-	TARGET=$OPENNGL_INSTALL_PATH/nginx/nginx.tar.gz
-	cp -f $TARGET $OPENNGL_HOME 
-	cd $OPENNGL_HOME &&  tar zxf nginx.tar.gz 
-	mv $OPENNGL_HOME/nginx* $OPENNGL_HOME/nginx
-fi
+#=============Groovy==================
+TARGET=$OPENNGL_INSTALL_PATH/nginx/groovy.zip
+cp -f $TARGET $OPENNGL_HOME/groovy
+cd $OPENNGL_HOME/groovy && unzip $TARGET
+echo "groovy install"
+#=============Nginx===================
+TARGET=$OPENNGL_INSTALL_PATH/nginx/nginx.tar.gz
+cp -f $TARGET $OPENNGL_HOME 
+cd $OPENNGL_HOME &&  tar zxf nginx.tar.gz 
+mv $OPENNGL_HOME/nginx* $OPENNGL_HOME/nginx
+echo "nginx install"
+
+
+
+
+
 
 
 
