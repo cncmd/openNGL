@@ -32,7 +32,8 @@ mkdir -p $OPENNGL_HOME/nginx
 if [ ! -d $OPENNGL_NGX_GR ] ; then
 	TARGET=$OPENNGL_INSTALL_PATH/nginx/nginx.tar.gz
 	cp -f $TARGET $OPENNGL_HOME 
-	cd $OPENNGL_HOME &&  tar zxf nginx.tar.gz && mv nginx* nginx
+	cd $OPENNGL_HOME &&  tar zxf nginx.tar.gz 
+	mv $OPENNGL_HOME/nginx* $OPENNGL_HOME/nginx
 fi
 
 
