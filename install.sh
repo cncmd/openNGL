@@ -38,7 +38,7 @@ echo "groovy install"
 TARGET=$OPENNGL_INSTALL_PATH/nginx/nginx.tar.gz
 cp -f $TARGET $OPENNGL_HOME 
 cd $OPENNGL_HOME &&  tar zxf nginx.tar.gz 
-mv $OPENNGL_HOME/nginx* $OPENNGL_HOME/nginx
+mv $OPENNGL_HOME/nginx-* $OPENNGL_HOME/nginx
 echo "nginx install"
 
 
