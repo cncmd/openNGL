@@ -22,15 +22,17 @@ fi
 if [ ! -d  $OPENNGL_HOME ] ; then 
 	echo "work space install"
 fi
+
 mkdir -p $OPENNGL_HOME/jars
 mkdir -p $OPENNGL_HOME/groovy
 mkdir -p $OPENNGL_HOME/lua
 mkdir -p $OPENNGL_HOME/oper
+mkdir -p $OPENNGL_HOME/nginx
 
 if [ ! -d $OPENNGL_NGX_GR ] ; then
 	TARGET=$OPENNGL_INSTALL_PATH/nginx/nginx.tar.gz
-	cp -f $TARGET $OPENNGL_HOME
-	cd $OPENNGL_HOME &&  tar zxf nginx.tar.gz && mv * nginx
+	cp -f $TARGET $OPENNGL_HOME 
+	cd $OPENNGL_HOME &&  tar zxf nginx.tar.gz && mv nginx* nginx
 fi
 
 
