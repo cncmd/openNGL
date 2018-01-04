@@ -3,7 +3,12 @@ OPENNGL_INSTALL_PATH=`pwd`
 OPENNGL_HOME=/home/admin/
 OPENNGL_NGX_GR=$OPENNGL_HOME/nginx
 OPENNGL_NGX_RESTY_LIB=/usr/local/openresty/lualib/resty/
+export LUAJIT_LIB=/usr/local/openresty/luajit/lib/
+export LUAJIT_INC=/usr/local/openresty/luajit/include/luajit-2.0/
+export LUA_LIB=/usr/local/openresty/lualib/
+export PATH=$PATH:$/home/admin/groovy/groovy-2.6.0-alpha-2/bin
 #==========openresty==========
+
 USER=`id | awk '{print(substr($2,5,1))}'`
 
 if [ "$USER" == "0" ] ; then
@@ -37,6 +42,7 @@ echo "groovy install"
 LIB_DIR=$OPENNGL_HOME/groovy/groovy-2.6.0-alpha-2/lib/
 cp -f $OPENNGL_INSTALL_PATH/jars/*  $LIB_DIR
 cp -f $OPENNGL_INSTALL_PATH/lua/*  $OPENNGL_HOME/lua
+cp -f $OPENNGL_INSTALL_PATH/oper/* $OPENNGL_HOME
 echo "groovy lib install"
 
 #=============Nginx===================
@@ -45,6 +51,10 @@ cp -f $TARGET $OPENNGL_HOME
 cd $OPENNGL_HOME &&  tar zxf nginx.tar.gz 
 mv $OPENNGL_HOME/nginx-* $OPENNGL_HOME/nginx -f 
 echo "nginx install"
+
+#=============Start====================
+cd  $OPENNGL_HOME && nohup groovy pubdaemon.groovy &
+
 
 
 
