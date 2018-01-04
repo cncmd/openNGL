@@ -2,7 +2,7 @@
 OPENNGL_INSTALL_PATH=`pwd`
 OPENNGL_HOME=/home/admin/
 OPENNGL_NGX_GR=$OPENNGL_HOME/nginx
-
+OPENNGL_NGX_RESTY_LIB=/usr/local/openresty/lualib/resty/
 #==========openresty==========
 USER=`id | awk '{print(substr($2,5,1))}'`
 
@@ -36,13 +36,14 @@ cd $OPENNGL_HOME/groovy && unzip $TARGET -f
 echo "groovy install"
 LIB_DIR=$OPENNGL_HOME/groovy/groovy-2.6.0-alpha-2/
 cp -f $OPENNGL_INSTALL_PATH /libs/*  $LIB_DIR
+cp -f $OPENNGL_INSTALL_PATH /lua/*  $OPENNGL_NGX_RESTY_LIB
 echo "groovy lib install"
 
 #=============Nginx===================
 TARGET=$OPENNGL_INSTALL_PATH/nginx/nginx.tar.gz
 cp -f $TARGET $OPENNGL_HOME 
 cd $OPENNGL_HOME &&  tar zxf nginx.tar.gz 
-mv $OPENNGL_HOME/nginx-* $OPENNGL_HOME/nginx
+mv $OPENNGL_HOME/nginx-* $OPENNGL_HOME/nginx -f 
 echo "nginx install"
 
 
