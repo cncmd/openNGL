@@ -1,12 +1,16 @@
 #!/bin/bash
+#============================
+export LUAJIT_LIB=/usr/local/openresty/luajit/lib/
+export LUAJIT_INC=/usr/local/openresty/luajit/include/luajit-2.0/
+export LUA_LIB=/usr/local/openresty/lualib/
+export PATH=$PATH:/home/admin/groovy/groovy-2.6.0-alpha-2/bin
+
+
 OPENNGL_INSTALL_PATH=`pwd`
 OPENNGL_HOME=/home/admin/
 OPENNGL_NGX_GR=$OPENNGL_HOME/nginx
 OPENNGL_NGX_RESTY_LIB=/usr/local/openresty/lualib/resty/
-export LUAJIT_LIB=/usr/local/openresty/luajit/lib/
-export LUAJIT_INC=/usr/local/openresty/luajit/include/luajit-2.0/
-export LUA_LIB=/usr/local/openresty/lualib/
-export PATH=$PATH:$/home/admin/groovy/groovy-2.6.0-alpha-2/bin
+
 #==========openresty==========
 
 USER=`id | awk '{print(substr($2,5,1))}'`
