@@ -1,7 +1,7 @@
 #!/bin/bash
 BASE_JAR_DIR=/home/admin/jars
 TARGET_JAR=$1
-NGINX_START_PATH=/home/admin/nginx/
+NGINX_START_PATH=/home/admin/nginx/nginx
 #==================================================
 if [ "" ==  "$TARGET_JAR" ] ; then 
   echo "params not enough"  

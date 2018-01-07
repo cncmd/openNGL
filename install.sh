@@ -33,7 +33,7 @@ if [ ! -d  $OPENNGL_HOME ] ; then
 	echo "work space install"
 fi
 
-mkdir -p $OPENNGL_HOME/{jars,groovy,lua,oper,nginx,logs}
+mkdir -p $OPENNGL_HOME/{jars,groovy,lua,nginx,logs}
 
 #=============Groovy==================
 TARGET=$OPENNGL_INSTALL_PATH/nginx/groovy.zip
@@ -51,13 +51,15 @@ TARGET=$OPENNGL_INSTALL_PATH/nginx/nginx.tar.gz
 cp -f $TARGET $OPENNGL_HOME/nginx/ 
 cd $OPENNGL_HOME/nginx/ &&  tar zxf nginx.tar.gz 
 mv $OPENNGL_HOME/nginx/nginx-* $OPENNGL_HOME/nginx/nginx -f 
+cd $OPENNGL_HOME/nginx/nginx/ && mv nginx-linux-x64 nginx
 echo "nginx install"
 #=============OPer=====================
 cp -f $OPENNGL_INSTALL_PATH/oper/* $OPENNGL_HOME/  
 #=============Conf=====================
 cp -f $OPENNGL_INSTALL_PATH/conf/nginx.conf $OPENNGL_HOME/nginx/nginx/conf/
 #=============Start====================
-cd  $OPENNGL_HOME && nohup groovy pubdaemon.groovy & > /home/admin/logs/pub.log
+cd  $OPENNGL_HOME && nohup groovy pubdaemon.groovy &
+cd $OPENNGL_HOME/nginx/nginx/ && ./nginx 
 
 
 
