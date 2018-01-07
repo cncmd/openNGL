@@ -42,7 +42,7 @@ mkdir -p $OPENNGL_HOME/nginx
 #=============Groovy==================
 TARGET=$OPENNGL_INSTALL_PATH/nginx/groovy.zip
 cp -f $TARGET $OPENNGL_HOME/groovy
-cd $OPENNGL_HOME/groovy && unzip $OPENNGL_HOME/groovy/*.zip -f 
+cd $OPENNGL_HOME/groovy && unzip *.zip
 echo "groovy install"
 LIB_DIR=$OPENNGL_HOME/groovy/groovy-2.6.0-alpha-2/lib/
 cp -f $OPENNGL_INSTALL_PATH/jars/*  $LIB_DIR
