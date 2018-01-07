@@ -29,6 +29,7 @@ fi
 
 #============mkdir ================
 if [ ! -d  $OPENNGL_HOME ] ; then 
+	mkdir -p $OPENNGL_HOME
 	echo "work space install"
 fi
 
