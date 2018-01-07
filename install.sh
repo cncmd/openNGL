@@ -52,11 +52,12 @@ echo "groovy lib install"
 
 #=============Nginx===================
 TARGET=$OPENNGL_INSTALL_PATH/nginx/nginx.tar.gz
-cp -f $TARGET $OPENNGL_HOME 
-cd $OPENNGL_HOME &&  tar zxf nginx.tar.gz 
-mv $OPENNGL_HOME/nginx-* $OPENNGL_HOME/nginx -f 
+cp -f $TARGET $OPENNGL_HOME/nginx/ 
+cd $OPENNGL_HOME/nginx/ &&  tar zxf nginx.tar.gz 
+mv $OPENNGL_HOME/nginx/nginx-* $OPENNGL_HOME/nginx/nginx -f 
 echo "nginx install"
-
+#=============Conf=====================
+cp -f $OPENNGL_INSTALL_PATH/conf/nginx.conf $OPENNGL_HOME/nginx/nginx/conf/
 #=============Start====================
 cd  $OPENNGL_HOME && nohup groovy pubdaemon.groovy &
 
