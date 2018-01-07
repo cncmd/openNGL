@@ -33,7 +33,7 @@ if [ ! -d  $OPENNGL_HOME ] ; then
 	echo "work space install"
 fi
 
-mkdir -p $OPENNGL_HOME/{jars,groovy,lua,nginx,logs}
+mkdir -p $OPENNGL_HOME/{jars/build,groovy,lua,nginx,logs}
 
 #=============Groovy==================
 TARGET=$OPENNGL_INSTALL_PATH/nginx/groovy.zip
