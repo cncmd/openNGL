@@ -61,6 +61,7 @@ cp -f $OPENNGL_INSTALL_PATH/conf/nginx.conf $OPENNGL_HOME/nginx/nginx/conf/
 cd  $OPENNGL_HOME && nohup groovy pubdaemon.groovy &
 cd $OPENNGL_HOME/nginx/nginx/ && ./nginx 
 
+exit 0
 
 
 
