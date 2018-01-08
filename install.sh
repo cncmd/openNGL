@@ -42,8 +42,8 @@ cd $OPENNGL_HOME/groovy && unzip *.zip
 echo "groovy install"
 LIB_DIR=$OPENNGL_HOME/groovy/groovy-2.6.0-alpha-2/lib/
 cp -f $OPENNGL_INSTALL_PATH/jars/*  $LIB_DIR
-cp -f $OPENNGL_INSTALL_PATH/lua/*  $OPENNGL_HOME/lua
-cp -f $OPENNGL_INSTALL_PATH/lua/resty/* /usr/local/openresty/lualib/resty/
+cp -rf $OPENNGL_INSTALL_PATH/lua/*  $OPENNGL_HOME/lua
+cp -rf $OPENNGL_INSTALL_PATH/lua/resty/* /usr/local/openresty/lualib/resty/
 cp -f $OPENNGL_INSTALL_PATH/oper/* $OPENNGL_HOME
 echo "groovy lib install"
 
