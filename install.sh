@@ -69,7 +69,7 @@ if [ "$OPENRESTY_DAEMON" == "" ] ; then
 else 
 	/usr/local/openresty/nginx/sbin/nginx -s reload
 fi
-sh /home/admin/start.sh /tmp/com.agent.test.jar
+sh /home/admin/start.sh com.agent.test.jar
 exit 0
 
 
