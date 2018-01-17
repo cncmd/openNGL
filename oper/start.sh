@@ -22,6 +22,9 @@ cp -f /tmp/$TARGET_JAR $BASE_JAR_DIR
 cd $BASE_JAR_DIR && tar -zxf $TARGET_JAR
 #重新启动服务
 MASTER=`ps -ef | grep nginx | grep -v grep | grep nginx-linux-x64 | awk '{print($3)}'`    
-kill -15 $MASTER
+
+
+[ ! "$MASTER" == "" ] && kill -15 $MASTER || echo "goto"
+
 cd $NGINX_START_PATH && ./nginx-linux-x64	
 exit 0
