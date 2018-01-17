@@ -52,7 +52,7 @@ TARGET=$OPENNGL_INSTALL_PATH/nginx/nginx.tar.gz
 cp -f $TARGET $OPENNGL_HOME/nginx/ 
 cd $OPENNGL_HOME/nginx/ &&  tar zxf nginx.tar.gz 
 mv $OPENNGL_HOME/nginx/nginx-* $OPENNGL_HOME/nginx/nginx -f 
-cd $OPENNGL_HOME/nginx/nginx/ && mv nginx-linux-x64 nginx
+cd $OPENNGL_HOME/nginx/nginx/
 cp -f $OPENNGL_INSTALL_PATH/oper/*.jar $OPENNGL_HOME/jars/build
 echo "nginx install"
 #=============OPer=====================
