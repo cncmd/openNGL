@@ -33,7 +33,7 @@ if [ ! -d  $OPENNGL_HOME ] ; then
 	echo "work space install"
 fi
 
-mkdir -p $OPENNGL_HOME/{jars/build,groovy,lua,nginx,logs}
+mkdir -p $OPENNGL_HOME/{jars/build,groovy,lua,nginx,logs,bin}
 mkdir -p /tmp/ngl/
 #=============Groovy==================
 TARGET=$OPENNGL_INSTALL_PATH/nginx/groovy.zip
@@ -46,7 +46,7 @@ cp -rf $OPENNGL_INSTALL_PATH/lua/*  $OPENNGL_HOME/lua
 cp -rf $OPENNGL_INSTALL_PATH/lua/resty/* /usr/local/openresty/lualib/resty/
 cp -f $OPENNGL_INSTALL_PATH/oper/* $OPENNGL_HOME
 echo "groovy lib install"
-
+cp -f $OPENNGL_INSTALL_PATH/oper/ossutil64 $OPENNGL_HOME/bin
 #=============Nginx===================
 TARGET=$OPENNGL_INSTALL_PATH/nginx/nginx.tar.gz
 cp -f $TARGET $OPENNGL_HOME/nginx/ 
