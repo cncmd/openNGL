@@ -34,7 +34,7 @@ if [ ! -d  $OPENNGL_HOME ] ; then
 fi
 
 mkdir -p $OPENNGL_HOME/{jars/build,groovy,lua,nginx,logs}
-
+mkdir -p /tmp/ngl/
 #=============Groovy==================
 TARGET=$OPENNGL_INSTALL_PATH/nginx/groovy.zip
 cp -f $TARGET $OPENNGL_HOME/groovy
