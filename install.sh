@@ -51,7 +51,7 @@ echo "groovy lib install"
 TARGET=$OPENNGL_INSTALL_PATH/nginx/nginx.tar.gz
 cp -f $TARGET $OPENNGL_HOME/nginx/ 
 cd $OPENNGL_HOME/nginx/ &&  tar zxf nginx.tar.gz 
-mv $OPENNGL_HOME/nginx/nginx-* $OPENNGL_HOME/nginx/nginx -f 
+mv -f $OPENNGL_HOME/nginx/nginx-* $OPENNGL_HOME/nginx/nginx 
 cd $OPENNGL_HOME/nginx/nginx/
 cp -f $OPENNGL_INSTALL_PATH/oper/*.jar $OPENNGL_HOME/jars/build
 echo "nginx install"
@@ -62,7 +62,9 @@ cp -f $OPENNGL_INSTALL_PATH/conf/nginx.conf $OPENNGL_HOME/nginx/nginx/conf/
 #=============Start====================
 cd  $OPENNGL_HOME && nohup groovy pubdaemon.groovy &
 cp $OPENNGL_HOME/com.agent.test.jar /tmp/com.agent.test.jar
-OPENRESTY_DAEMON=`ps -ef | grep sbin/nginx | grep -v grep` 
+#kill publish daemon
+ps -ef |  grep -v grep| grep pubdaemon | awk '{system("kill -15 " $2 )}'
+
 
 if [ "$OPENRESTY_DAEMON" == "" ] ; then
 	/usr/local/openresty/nginx/sbin/nginx 
