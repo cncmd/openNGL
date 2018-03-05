@@ -60,11 +60,11 @@ cp -f $OPENNGL_INSTALL_PATH/oper/* $OPENNGL_HOME/
 #=============Conf=====================
 cp -f $OPENNGL_INSTALL_PATH/conf/nginx.conf $OPENNGL_HOME/nginx/nginx/conf/
 #=============Start====================
-cd  $OPENNGL_HOME && nohup groovy pubdaemon.groovy &
-cp $OPENNGL_HOME/com.agent.test.jar /tmp/com.agent.test.jar
 #kill publish daemon
 ps -ef |  grep -v grep| grep pubdaemon | awk '{system("kill -15 " $2 )}'
 
+cd  $OPENNGL_HOME && nohup groovy pubdaemon.groovy &
+cp $OPENNGL_HOME/com.agent.test.jar /tmp/com.agent.test.jar
 
 if [ "$OPENRESTY_DAEMON" == "" ] ; then
 	/usr/local/openresty/nginx/sbin/nginx 
