@@ -18,7 +18,12 @@ else
    rm -rf $BASE_JAR_DIR/*
 fi
 #====================================================
-cp -f /tmp/$TARGET_JAR $BASE_JAR_DIR
+if [ -f /tmp/$TARGET_JAR ] ;then
+	cp -f /tmp/$TARGET_JAR $BASE_JAR_DIR
+else
+	cp -f $TARGET_JAR $BASE_JAR_DIR
+fi
+
 cd $BASE_JAR_DIR && tar -zxf $TARGET_JAR
 #重新启动服务
 MASTER=`ps -ef | grep -v grep | grep nginx-linux-x64 | awk '{print($2)}'`    
