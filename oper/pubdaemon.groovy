@@ -123,11 +123,11 @@ listener.procMessageHandle = {
             
             def time_t=System.currentTimeMillis()
             OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
-            def file = new File("/tmp/${message.fileName}")
+            def file = new File("${message.fileName}")
             ossClient.getObject(new GetObjectRequest(bucketName, message.path), file);
             println(System.currentTimeMillis() - time_t)
             ossClient.shutdown();
-            Env.command("sh /home/admin/start.sh /tmp/${message.fileName}")
+            Env.command("sh /home/admin/start.sh ${message.fileName}")
         break;
     }
 }
