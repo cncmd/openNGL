@@ -122,10 +122,8 @@ listener.procMessageHandle = {
             String bucketName      = "apollox-oss"
             
             def time_t=System.currentTimeMillis()
-            
             OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
             def file = new File("/tmp/${message.fileName}")
-			println("/tmp/${message.fileName}")
             ossClient.getObject(new GetObjectRequest(bucketName, message.path), file);
             println(System.currentTimeMillis() - time_t)
             ossClient.shutdown();
