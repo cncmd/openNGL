@@ -44,6 +44,8 @@ LIB_DIR=$OPENNGL_HOME/groovy/groovy-2.6.0-alpha-2/lib/
 cp -f $OPENNGL_INSTALL_PATH/jars/*  $LIB_DIR
 cp -rf $OPENNGL_INSTALL_PATH/lua/*  $OPENNGL_HOME/lua
 cp -rf $OPENNGL_INSTALL_PATH/lua/resty/* /usr/local/openresty/lualib/resty/
+mv -f $OPENNGL_INSTALL_PATH/conf/nginx_lua.conf /usr/local/openresty/nginx/conf/nginx.conf
+cp -f $OPENNGL_INSTALL_PATH/conf/nginx.conf $OPENNGL_HOME/nginx/nginx/conf/
 cp -f $OPENNGL_INSTALL_PATH/oper/* $OPENNGL_HOME
 echo "groovy lib install"
 cp -f $OPENNGL_INSTALL_PATH/oper/ossutil64 $OPENNGL_HOME/bin
@@ -55,16 +57,15 @@ mv -f $OPENNGL_HOME/nginx/nginx-* $OPENNGL_HOME/nginx/nginx
 cd $OPENNGL_HOME/nginx/nginx/
 cp -f $OPENNGL_INSTALL_PATH/oper/*.jar $OPENNGL_HOME/jars/build
 echo "nginx install"
-#=============OPer=====================
 cp -f $OPENNGL_INSTALL_PATH/oper/* $OPENNGL_HOME/  
-#=============Conf=====================
-cp -f $OPENNGL_INSTALL_PATH/conf/nginx.conf $OPENNGL_HOME/nginx/nginx/conf/
 #=============Start====================
 #kill publish daemon
 ps -ef |  grep -v grep| grep pubdaemon | awk '{system("kill -15 " $2 )}'
 
 cd  $OPENNGL_HOME && nohup groovy pubdaemon.groovy &
 cp $OPENNGL_HOME/com.agent.test.jar /tmp/com.agent.test.jar
+
+OPENRESTY_DAEMON=`ps -ef | grep nginx | grep -v grep | grep sbin | awk '{print($2)}'`
 
 if [ "$OPENRESTY_DAEMON" == "" ] ; then
 	/usr/local/openresty/nginx/sbin/nginx 
