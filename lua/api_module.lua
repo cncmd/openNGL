@@ -592,7 +592,7 @@ do
 end exports.oss_client =  {};
     
  exports.oss_client.set = function (oldFile, newFile)
-        local  cmd = "chmod -R  777 /home/admin/ && /home/admin/cms_oper/bin/ossutil64 config -e oss-cn-hangzhou.aliyuncs.com -i LTAIyXPfgbfqSBp9 -k VvUzCJFt2uvr9klJzryYSIKy2i5h4S -c /home/admin/.ossutilconfig && /home/admin/cms_oper/bin/ossutil64  cp -f ".. oldFile .."  oss://apollox-hd/backup" .. newFile .. " -c /home/admin/.ossutilconfig"
+        local  cmd = "chmod -R  777 /home/admin/ && /home/admin/bin/ossutil64 config -e oss-cn-hangzhou.aliyuncs.com -i LTAIyXPfgbfqSBp9 -k VvUzCJFt2uvr9klJzryYSIKy2i5h4S -c /home/admin/.ossutilconfig && /home/admin/bin/ossutil64  cp -f ".. oldFile .."  oss://apollox-hd/backup" .. newFile .. " -c /home/admin/.ossutilconfig"
         os.execute(cmd)
   end
   
@@ -602,14 +602,14 @@ end exports.oss_client =  {};
         local file = exports.CACHE_PATH .. string.gsub(k, "/", "#") 
         local newFile = "backup" .. k;
         fsave(file , v);
-        local  cmd = "chmod -R  777 /home/admin/ && /home/admin/cms_oper/bin/ossutil64 config -e oss-cn-hangzhou.aliyuncs.com -i LTAIyXPfgbfqSBp9 -k VvUzCJFt2uvr9klJzryYSIKy2i5h4S -c /home/admin/.ossutilconfig && /home/admin/cms_oper/bin/ossutil64  cp -f ".. file .."  oss://apollox-hd/" .. newFile .. " -c /home/admin/.ossutilconfig"
+        local  cmd = "chmod -R  777 /home/admin/ && /home/admin/bin/ossutil64 config -e oss-cn-hangzhou.aliyuncs.com -i LTAIyXPfgbfqSBp9 -k VvUzCJFt2uvr9klJzryYSIKy2i5h4S -c /home/admin/.ossutilconfig && /home/admin/bin/ossutil64  cp -f ".. file .."  oss://apollox-hd/" .. newFile .. " -c /home/admin/.ossutilconfig"
         os.execute(cmd)
   end
   --容灾
   exports.oss_client.getKV = function (k) 
      local newFile = "backup" .. k;
      local file = exports.CACHE_PATH .. string.gsub(k, "/", "#") 
-     local  cmd = "chmod -R  777 /home/admin/ && /home/admin/cms_oper/bin/ossutil64 config -e oss-cn-hangzhou.aliyuncs.com -i LTAIyXPfgbfqSBp9 -k VvUzCJFt2uvr9klJzryYSIKy2i5h4S -c /home/admin/.ossutilconfig && /home/admin/cms_oper/bin/ossutil64  cp -f  oss://apollox-hd/".. newFile .." " ..file .. " -c /home/admin/.ossutilconfig"
+     local  cmd = "chmod -R  777 /home/admin/ && /home/admin/bin/ossutil64 config -e oss-cn-hangzhou.aliyuncs.com -i LTAIyXPfgbfqSBp9 -k VvUzCJFt2uvr9klJzryYSIKy2i5h4S -c /home/admin/.ossutilconfig && /home/admin/bin/ossutil64  cp -f  oss://apollox-hd/".. newFile .." " ..file .. " -c /home/admin/.ossutilconfig"
      os.execute(cmd)
      
      local exists = io.open(file,"rb");
@@ -747,27 +747,30 @@ App(
       ngx.say(cjson.encode({data=res}))
      end
 );  local rdb_client =  {};
-  rdb_client.RDB_HOST="http://127.0.0.1:8082/rdb/api/"
+    rdb_client.RDB_HOST="http://127.0.0.1:8090"
 --  rdb_client.RDB_INSTANCE="5998477b-4f6b-441b-9b56-9e5ddf39deee";
-  rdb_client.RDB_INSTANCE="2878205e-16fd-4e4a-9215-a1edc863835d";
-  rdb_client.set = function (k, v) 
+    rdb_client.set = function (k, v) 
     local http      = require "resty.http"  
     local cjson    = require "cjson"
     local httpc     = http.new()  
-    local url         =  exports.rdb_client.RDB_HOST .. "set.json";
+    local url         =  exports.rdb_client.RDB_HOST;
     
-    local params = {
-      ["instance"] = exports.rdb_client.RDB_INSTANCE,
-      ["args"] = {k,v}
-    }
+--    local params = {
+--      ["instance"] = exports.rdb_client.RDB_INSTANCE,
+--      ["args"] = {k,v}
+--    }
     
     local res, err = httpc:request_uri(url, {  
-        method   = "POST",  
-        body       = cjson.encode(params),  
+        path = "/SSDB/WeakGet.mxml?opt=set&data=${v}&key=${k}&n=1",
+        method   = "GET",  
     })  
    
+   ngx.log(ngx.ERR, err);
+   ngx.log(ngx.ERR, cjson.encode(res.body))
+   
+   
    if res ~= nil and res.body ~= nil then
-        local eax = cjson.decode(res.body);
+        local eax = res.body;
         if eax.code == 200 then
             exports.oss_client.setKV(k,v); 
             return 1;
@@ -798,9 +801,9 @@ App(
       }
       
       local res, err = httpc:request_uri(url, {  
-          method   = "GET",  
-          body       = cjson.encode(params),  
-      })  
+        path = "/SSDB/WeakGet.mxml?opt=get&key=${k}&n=1",
+        method   = "GET",  
+       })  
      
       if res ~= nil and res.body ~= nil then
           local eax = cjson.decode(res.body);
@@ -1126,10 +1129,10 @@ App(
             <ul class="app-bar-menu place-right" data-flexdirection="reverse">
                          <script src="/build/lua.vm.js"></script>
                         <script src="/build/navx.min.js"></script>
-                        <li class="active-container" style="max-width:100px;min-width:100px;">
-                            <a href="#" class="dropdown-toggle active-toggle" style="max-width:100px;min-width:100px;"><span class="mif-cog"></span>&nbsp;<span id="username">{{user}}</span></a>
-                            <ul class="d-menu" data-role="dropdown" style="min-width:100px;max-width:100px;border:0;">
-                                <li><a href="javascript:void(0)" onclick="exports.logout()" style="max-width:100px;min-width:100px;">退出</a></li>
+                        <li class="active-container" style="max-width:300px;min-width:100px;">
+                            <a href="#" class="dropdown-toggle active-toggle" style="max-width:300px;min-width:100px;"><span class="mif-cog"></span>&nbsp;<span id="username">{{user}}</span></a>
+                            <ul class="d-menu" data-role="dropdown" style="min-width:300px;max-width:100px;border:0;">
+                                <li><a href="javascript:void(0)" onclick="exports.logout()" style="max-width:300px;min-width:100px;">退出</a></li>
                             </ul>
                         </li>
             </ul>
@@ -2694,8 +2697,8 @@ do
               o.register = function () 
                     local http = require "resty.http"  
                     local httpc = http.new() ;
---                    local url     = "https://oapi.dingtalk.com/sns/gettoken?appid=dingoamr5ad1cbfuzpocez&appsecret=zIQ3YJDnqOsxzIrUdi5RIjg0ssaau9oI79-smtvZMnsBC0HdbK9E5Srr-hS2ZXaO"  
-                    local url     = "https://oapi.dingtalk.com/sns/gettoken?appid=dingoaqh6opuptwcq74kil&appsecret=lG2QzoubW1MiLi7aN2BfjHXvc0gQBPo38v65HgZkzcdQ05psG_G6jR-85Cr7_Kq5"  
+                    local url     = "https://oapi.dingtalk.com/sns/gettoken?appid=dingoamr5ad1cbfuzpocez&appsecret=zIQ3YJDnqOsxzIrUdi5RIjg0ssaau9oI79-smtvZMnsBC0HdbK9E5Srr-hS2ZXaO"  
+--                    local url     = "https://oapi.dingtalk.com/sns/gettoken?appid=dingoaqh6opuptwcq74kil&appsecret=lG2QzoubW1MiLi7aN2BfjHXvc0gQBPo38v65HgZkzcdQ05psG_G6jR-85Cr7_Kq5"  
                     local res, err = httpc:request_uri(url, {  
                         ssl_verify = false,
                         method   = "GET",  
@@ -2835,11 +2838,50 @@ App(
          ngx.header["Content-Type"] = "text/plain";
          if message.msgId == "Get" then
             if  eax['code'] ~= nil then
-                    local o = AuthHandle_C();
-                    o.register();
-                    o.getPersistentCode( eax['code'] );
-                    o.get_sns_token();
-                    o.getuserinfo();
+                            local http = require "resty.http"  
+                            local httpc = http.new()  ;
+                            local cls = exports.createNamespace("auth");
+                            local url     = 'http://127.0.0.1:8090' ;
+                            local res, err = httpc:request_uri(url, {
+                                  path = "/Auth/Get.mxml?code=" .. eax['code'],  
+                                  method = "GET",  
+                                  headers = {
+                                        ["User-Agent"] = "apollox"
+                                    }
+                            }) ;
+--                            ngx.log(ngx.ERR, url);
+--                            ngx.log(ngx.ERR, res.body == nil);
+                            local respStr = cjson.encode(res.body);
+                            if res ~= nil and res.body then
+                                local data = cjson.decode(res.body).data.user
+                                local userinfo = cjson.decode(data)
+                                if  not userinfo then
+                                    ngx.redirect("/Error/Get.mxml");
+                                    return
+                                end
+                                cls.add_cookie("apollox_token="..userinfo["uniq"] .."; Path=/")
+                                cls.add_cookie("apollox_user=" ..userinfo["name"] .."; Path=/")
+                                cls.add_cookie("apollox_avatar=" ..userinfo["img"] .."; Path=/")
+                                
+                                local cache  = exports.rdb_client;
+                               local pname= exports.normalizeSavePath(userinfo["uniq"], null, "__user")
+                               local ebx = cache.get(pname);
+                               local user_info = {};
+                               if  ebx == nil then
+                                   user_info['nick'] = userinfo["name"];
+                                   user_info['gold'] = 0;  -- 金币
+                                   user_info['level'] = 0;  -- 等级 
+                                   user_info['licon'] = 0; -- 等级图标
+                                   user_info['isDev']= 0;-- 是否开发者
+                                   user_info['lastmodi'] = 0; --是否更新
+                               else
+                                  user_info = cjson.decode(ebx);
+                               end
+                               local eax       = cjson.encode(user_info);
+                               local eax       = cache.set(pname, eax) ;     
+                            end
+                            httpc:close();
+                            ngx.redirect("/Profile/Get.mxml");
             end
          end
      end
